@@ -1,0 +1,85 @@
+{% extends 'core/base.html' %} {% block title %} Conversation {% endblock %} {%
+block content %} {% block content %}
+<div class="container mt-6">
+  <h1 class="mb-6 text-3xl">Conversation</h1>
+
+  <div class="space-y-6">
+    {% for message in conversation.messages.all %}
+    <div class="p-6 flex {% cycle 'bg-primary', 'bg-secondary' %} rounded-xl">
+      <div>
+        <p class="mb-2 text-gray-600">
+          <strong>{{ message.created_by.username }}</strong> @ {{
+          message.created_at }}
+        </p>
+        <p class="text-lg">{{ message.content }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <form method="post" action="." class="mt-6">
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <label for="id_content" class="block text-sm font-medium text-gray-700"
+        >Your Message</label
+      >
+      {{ form.content }}
+    </div>
+
+    {% if form.errors %}
+    <div class="mb-3 p-6 bg-danger text-white rounded-xl">
+      {% for field in form %} {% if field.errors %}
+      <p>{{ field.label_tag }}: {{ field.errors }}</p>
+      {% endif %} {% endfor %} {% if form.non_field_errors %}
+      <p>{{ form.non_field_errors }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <button
+      class="py-4 px-8 text-lg bg-primary hover:bg-primary-dark rounded-xl text-white"
+    >
+      Send
+    </button>
+  </form>
+</div>
+
+<style>
+  body {
+    background-color: #f5f8fa; /* Twitter's background color */
+  }
+
+  .container {
+    background-color: #ffffff; /* Twitter's background color */
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .bg-primary {
+    background-color: #1da1f2; /* Twitter's primary color */
+  }
+
+  .bg-secondary {
+    background-color: #e0e6eb; /* Twitter's secondary color */
+  }
+
+  .text-primary {
+    color: #1da1f2; /* Twitter's primary text color */
+  }
+
+  .hover\:bg-primary-dark:hover {
+    background-color: #1990e8; /* Twitter's primary color on hover */
+  }
+
+  .bg-danger {
+    background-color: #ff4d4f; /* Twitter's error alert color */
+  }
+
+  .text-white {
+    color: #ffffff; /* White text color */
+  }
+</style>
+{% endblock %}

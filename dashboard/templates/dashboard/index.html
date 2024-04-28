@@ -1,0 +1,99 @@
+{% extends 'core/base.html' %} {% block title %}Dashboard{% endblock %} {% block
+content %} {% block content %}
+<div class="container mt-6">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-white rounded-xl p-4">
+        <h2 class="mb-4 text-2xl text-center">My Items</h2>
+
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+          {% for item in items %}
+          <div class="col">
+            <a
+              href="{% url 'item:detail' item.id %}"
+              class="text-decoration-none text-dark"
+            >
+              <div class="card h-100 border-0 shadow">
+                <img
+                  src="{{ item.image.url }}"
+                  class="card-img-top rounded-t-xl"
+                  alt="{{ item.name }}"
+                />
+                <div class="card-body">
+                  <h5 class="card-title text-2xl">{{ item.name }}</h5>
+                  <p class="card-text text-muted">Price: ${{ item.price }}</p>
+                  <p class="card-text">
+                    <strong>Seller:</strong> {{ item.created_by.username }}
+                  </p>
+                  <p class="card-text">
+                    <strong>Created:</strong>{{ item.created_at|date:"F d, Y" }}
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% if items|length == 0 %}
+        <p class="text-center mt-4">
+          You haven't listed any items yet.
+          <a href="{% url 'item:new' %}" class="text-primary"
+            >List an item now!</a
+          >
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  body {
+    background-color: #f5f8fa; /* Twitter's background color */
+  }
+
+  .container {
+    background-color: #ffffff; /* Twitter's background color */
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .card {
+    border: none; /* Remove card borders */
+  }
+
+  .card-img-top {
+    border-radius: 10px 10px 0 0; /* Rounded corners for top of card image */
+  }
+
+  .card-body {
+    padding: 1.25rem; /* Add padding inside card body */
+  }
+
+  .btn-primary {
+    background-color: #1da1f2; /* Twitter's blue color */
+    border: 1px solid #1da1f2; /* Twitter's blue color */
+    color: #ffffff; /* White text color */
+  }
+
+  .btn-primary:hover {
+    background-color: #1990e8; /* Twitter's hover color */
+    border: 1px solid #1990e8; /* Twitter's hover color */
+  }
+
+  .text-dark {
+    color: #14171a; /* Twitter's dark text color */
+  }
+
+  .text-primary {
+    color: #1da1f2; /* Twitter's blue color */
+  }
+
+  .text-primary:hover {
+    text-decoration: underline; /* Underline on hover for primary links */
+  }
+</style>
+{% endblock %}

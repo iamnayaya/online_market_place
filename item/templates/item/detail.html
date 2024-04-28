@@ -1,0 +1,124 @@
+{% extends 'core/base.html' %} {% block title %} {{ item.name }} {% endblock %}
+{% block content %}
+<div class="container mt-6">
+  <div class="row">
+    <div class="col-md-9">
+      <img
+        src="{{ item.image.url }}"
+        class="img-fluid rounded-xl"
+        alt="{{ item.name }}"
+      />
+    </div>
+
+    <div class="col-md-3 p-4 bg-white rounded-xl">
+      <h1 class="mb-4 text-3xl">{{ item.name }}</h1>
+      <p class="text-muted"><strong>Price: </strong>${{ item.price }}</p>
+      <p class="text-muted">
+        <strong>Seller: </strong>{{ item.created_by.username }}
+      </p>
+
+      {% if item.description %}
+      <p class="text-dark">
+        <strong class="text-muted">Description:</strong><br />
+        {{ item.description }}
+      </p>
+      {% endif %} {% if request.user == item.created_by %}
+      <div class="mt-4 p-4 bg-light rounded-xl">
+        <p class="text-primary">This is your item!</p>
+        <a href="{% url 'item:edit' item.id %}" class="btn btn-primary mt-4"
+          >Edit</a
+        >
+        <a href="{% url 'item:delete' item.id %}" class="btn btn-danger mt-4"
+          >Delete</a
+        >
+      </div>
+      {% else %}
+      <a
+        href="{% url 'conversation:new' item.id %}"
+        class="btn btn-success mt-4"
+        >Contact Seller</a
+      >
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="container mt-6">
+  <h2 class="mb-4 text-2xl text-center">Related items</h2>
+
+  <div class="row">
+    {% for related_item in related_items %}
+    <div class="col-md-4">
+      <a
+        href="{% url 'item:detail' related_item.id %}"
+        class="text-decoration-none text-dark"
+      >
+        <div class="card mb-4">
+          <img
+            src="{{ related_item.image.url }}"
+            class="card-img-top rounded-t-xl"
+            alt="{{ related_item.name }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title text-2xl">{{ related_item.name }}</h5>
+            <p class="card-text text-muted">Price: ${{ related_item.price }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  body {
+    background-color: #f5f8fa;
+  }
+
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+  .bg-light {
+    background-color: #f8f9fa;
+  }
+
+  .rounded-xl {
+    border-radius: 15px;
+  }
+
+  .text-dark {
+    color: #333333;
+  }
+
+  .text-muted {
+    color: #657786;
+  }
+
+  .text-primary {
+    color: #007bff;
+  }
+
+  .btn-primary {
+    background-color: #1da1f2;
+    border: 1px solid #1da1f2;
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background-color: #1990e8;
+    border: 1px solid #1990e8;
+  }
+
+  .btn-success {
+    background-color: #17bf63;
+    border: 1px solid #17bf63;
+    color: #ffffff;
+  }
+
+  .btn-success:hover {
+    background-color: #14ab54;
+    border: 1px solid #14ab54;
+  }
+</style>
+{% endblock %}

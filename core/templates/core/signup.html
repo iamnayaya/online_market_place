@@ -1,0 +1,95 @@
+<!-- templates/signup.html -->
+
+{% extends 'core/base.html' %} {% block title %} Sign Up | Lantern {% endblock
+%} {% block content %}
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card p-4 rounded shadow">
+        <div class="card-header text-center">
+          <h2>Create Your Lantern Account</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" action="#" class="signup-form">
+            {% csrf_token %}
+            <div class="form-group">
+              {{ form.username.label_tag }} {{ form.username }}
+            </div>
+            <div class="form-group">
+              {{ form.email.label_tag }} {{ form.email }}
+            </div>
+            <div class="form-group">
+              {{ form.password1.label_tag }} {{ form.password1 }}
+            </div>
+            <div class="form-group">
+              {{ form.password2.label_tag }} {{ form.password2 }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block rounded">
+              Sign Up
+            </button>
+          </form>
+          <div class="mt-3 text-center">
+            <span class="text-muted">Already have an account?</span>
+            <a href="{% url 'core:login' %}" class="text-primary">Log in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+  }
+
+  .btn {
+    border-radius: 5px;
+  }
+
+  .btn-primary {
+    background-color: #405de6;
+    border-color: #405de6;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #3b5998; /* Instagram's primary color on hover */
+    border-color: #3b5998;
+  }
+
+  .text-muted {
+    color: #6c757d;
+  }
+
+  .text-primary {
+    color: #405de6;
+  }
+
+  .text-primary:hover {
+    color: #3b5998; /* Instagram's primary color on hover */
+  }
+</style>
+
+{% endblock %}

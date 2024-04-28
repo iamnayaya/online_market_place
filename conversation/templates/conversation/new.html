@@ -1,0 +1,85 @@
+{% extends 'core/base.html' %} {% block title %}New Conversation{% endblock %}
+{% block content %}
+<div class="container mt-6">
+  <h1 class="mb-6 text-3xl">New Conversation</h1>
+
+  <form method="post" action=".">
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <label for="id_recipient" class="form-label text-dark">Recipient</label>
+      {{ form.recipient }}
+    </div>
+
+    <div class="mb-4">
+      <label for="id_subject" class="form-label text-dark">Subject</label>
+      {{ form.subject }}
+    </div>
+
+    <div class="mb-4">
+      <label for="id_message" class="form-label text-dark">Message</label>
+      {{ form.message }}
+    </div>
+
+    {% if form.errors or form.non_field_errors %}
+    <div class="mb-3 p-4 bg-danger text-white rounded-xl">
+      {% for field in form %} {% if field.errors %}
+      <p>{{ field.label_tag }}: {{ field.errors }}</p>
+      {% endif %} {% endfor %} {% if form.non_field_errors %}
+      <p>{{ form.non_field_errors }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <button class="mt-4 btn btn-primary rounded-lg">Send</button>
+  </form>
+</div>
+
+<style>
+  body {
+    background-color: #f5f8fa; /* Twitter's background color */
+  }
+
+  .container {
+    background-color: #ffffff; /* Twitter's background color */
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .form-label {
+    color: #14171a; /* Twitter's dark text color */
+  }
+
+  .btn-primary {
+    background-color: #1da1f2; /* Twitter's primary color */
+    border: 1px solid #1da1f2; /* Twitter's primary color */
+    color: #ffffff; /* White text color */
+  }
+
+  .btn-primary:hover {
+    background-color: #1990e8; /* Twitter's primary color on hover */
+  }
+
+  .bg-danger {
+    background-color: #ff4d4f; /* Twitter's error alert color */
+  }
+
+  .text-white {
+    color: #ffffff; /* White text color */
+  }
+
+  .rounded-xl {
+    border-radius: 15px;
+  }
+
+  .rounded-lg {
+    border-radius: 10px;
+  }
+
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+</style>
+{% endblock %}

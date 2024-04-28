@@ -1,0 +1,143 @@
+{% extends 'core/base.html' %} {% block title %}Items{% endblock %} {% block
+content %}{% block content %}
+<div class="container mt-6">
+  <div class="row">
+    <!-- Sidebar Filters -->
+    <div class="col-md-3">
+      <form method="get" action="{% url 'item:items' %}">
+        <div class="mb-3">
+          <input
+            name="query"
+            class="form-control"
+            type="text"
+            value="{{ query }}"
+            placeholder="Search for Shadda, Atampa, Yadi..."
+          />
+        </div>
+        <button class="btn btn-primary mb-3">Search</button>
+
+        <hr class="my-4" />
+
+        <p class="font-weight-bold">Categories</p>
+        <ul class="list-group">
+          {% for category in categories %}
+          <li
+            class="list-group-item{% if category.id == category_id %} active{% endif %}"
+          >
+            <a
+              href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}"
+              class="text-decoration-none text-dark"
+            >
+              {{ category.name }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <hr class="my-4" />
+
+        <p class="font-weight-bold">Clear filters</p>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href="{% url 'item:items' %}" class="btn btn-warning">Clear</a>
+          </li>
+        </ul>
+      </form>
+    </div>
+
+    <!-- Main Content - Item Display -->
+    <div class="col-md-9">
+      <div class="row row-cols-1 row-cols-md-4 g-3">
+        {% for item in items %}
+        <div class="col mb-4">
+          <a
+            href="{% url 'item:detail' item.id %}"
+            class="text-decoration-none text-dark"
+          >
+            <div class="card h-100 border-0 shadow">
+              <img
+                src="{{ item.image.url }}"
+                class="card-img-top rounded-t-xl"
+                alt="{{ item.name }}"
+              />
+              <div class="card-body">
+                <h5 class="card-title text-2xl">{{ item.name }}</h5>
+                <p class="card-text text-muted">Price: ₦{{ item.price }}</p>
+                {# Use ₦ symbol for Nigerian Naira #}
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  body {
+    background-color: #f5f8fa; /* Twitter's background color */
+  }
+
+  .container {
+    background-color: #ffffff; /* Twitter's background color */
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .mb-3 {
+    margin-bottom: 15px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccd6dd; /* Twitter's input border color */
+    border-radius: 5px;
+    color: #1da1f2; /* Twitter's blue color */
+  }
+
+  .form-control:focus {
+    border-color: #1da1f2;
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+  }
+
+  .btn-primary {
+    background-color: #1da1f2; /* Twitter's blue color */
+    border: 1px solid #1da1f2; /* Twitter's blue color */
+    color: #ffffff; /* White text color */
+  }
+
+  .btn-primary:hover {
+    background-color: #1990e8; /* Twitter's hover color */
+    border: 1px solid #1990e8; /* Twitter's hover color */
+  }
+
+  .list-group-item {
+    cursor: pointer;
+  }
+
+  .list-group-item:hover {
+    background-color: #f0f8ff; /* Twitter's list item hover color */
+  }
+
+  .btn-warning {
+    background-color: #ffcc00; /* Twitter's warning color */
+    border: 1px solid #ffcc00; /* Twitter's warning color */
+    color: #000000; /* Black text color */
+  }
+
+  .btn-warning:hover {
+    background-color: #e6b800; /* Twitter's warning color hover */
+    border: 1px solid #e6b800; /* Twitter's warning color hover */
+    color: #000000; /* Black text color */
+  }
+
+  .text-dark {
+    color: #14171a; /* Twitter's dark text color */
+  }
+</style>
+{% endblock %}
